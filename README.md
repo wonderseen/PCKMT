@@ -1,5 +1,7 @@
 ## Abstract
 
+Source codes of ACL 2022-Efficient Cluster-Based k-Nearest-Neighbor Machine Translation.
+
 The implement of our proposed PCKMT is build upon the research of:
 
 - adaptive kNN-MT (Xin Zheng et. al. 2021)
