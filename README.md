@@ -4,7 +4,7 @@ Source codes of ACL 2022-Efficient Cluster-Based k-Nearest-Neighbor Machine Tran
 
 The implement of our proposed PCKMT is build upon the research of:
 
-- adaptive kNN-MT (Xin Zheng et. al. 2021)
+- adaptive kNN-MT (Xin Zheng et. al. 2021) [[code]](https://github.com/zhengxxn/adaptive-knn-mt)
 - Fairseq and Faiss developed by Facebook Research
 
 ## Requirement
