@@ -10,10 +10,15 @@ The implement of our proposed PCKMT is build upon the research of:
 ## Requirement
 
 - python >= 3.6
-- faiss-gpu >= 1.6.5
-- fairseq >= 0.10.1
-- torch >= 1.5.0
-- torch-scatter >= 2.0.5
+- faiss-gpu == 1.6.5
+- torch == 1.5.0
+- torch-scatter == 2.0.5
+
+With these requirements, it is suggested to use the command to install this editable version (fairseq == 0.10.1):
+
+```shell
+pip install --editable ./
+```
 
 ## Implement
 
