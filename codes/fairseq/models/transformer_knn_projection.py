@@ -117,7 +117,8 @@ class TripletDatastoreSamplingDataset(Dataset):
             new_key_list = []
             new_val_list = []
             base_number = min_samples
-            sample_bound = 50000
+            # Limited by memory, 100000 koran/it/medical (<=10M) 20000 for law/subtitles (>=19M). 
+            sample_bound = 100000
             for vocab_id, keys in tqdm(enumerate(key_list)):
                 if len(keys) == 0:
                     continue
@@ -1447,7 +1448,9 @@ class TransformerDecoder(FairseqIncrementalDecoder):
             new_key_list = []
             new_val_list = []
             base_number = min_samples
-            sample_bound = 10000
+
+            # Limited by memory, 100000 koran/it/medical (<=10M) 20000 for law/subtitles (>=19M). 
+            sample_bound = 100000
             for vocab_id, keys in tqdm(enumerate(key_list)):
                 if len(keys) == 0:
                     continue
@@ -1456,7 +1459,7 @@ class TransformerDecoder(FairseqIncrementalDecoder):
                     print('clustering %d' % vocab_id)
 
                 '''
-                key_list[0] is a list of all-zero keys, because vocab[0] is '<s>'
+                key_list[0] is a list of all-zero keys, because the key and value mmap space were initialized as all zero tensors.
                 key_list[1~3] are not all-zero keys, of which the vocabs are '<pad> </s> <unk>'
                 '''
                 if vocab_id < 4 and vocab_id != 2:
@@ -1582,7 +1585,7 @@ class TransformerDecoder(FairseqIncrementalDecoder):
                 }
                 yield batch_dict
 
-        return knn_projection_triplet_iterator(batch_size=256)
+        return knn_projection_triplet_iterator(batch_size=1024)
 
     def forward_svd_training(
             self,

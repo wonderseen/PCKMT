@@ -36,7 +36,7 @@ class KNN_Dstore(object):
         # set temperature
         self.temperature_type = args.knn_temperature_type
         if self.temperature_type == 'fix':
-            self.temperature = args.knn_temperature_value
+            self.temperature = args.knn_temperature_value # 10
         elif self.temperature_type == 'trainable':
             self.temperature = None
         else:
@@ -407,7 +407,7 @@ if __name__ == "__main__":
         faiss_metric_type = 'do_not_recomp_l2'
         knn_sim_func = 'do_not_recomp_l2'
         dstore_fp16 = True
-        knn_temperature = 1.0
+        knn_temperature_value = 1.0
         indexfile = ''
         dstore_filename = ''
         no_load_keys = False

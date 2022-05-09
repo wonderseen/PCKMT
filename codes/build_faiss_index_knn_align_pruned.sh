@@ -1,6 +1,6 @@
 PROJECT_PATH=.
 DOMAINS=(subtitles)
-DSTORE_SIZES=(137803715)
+DSTORE_SIZES=(137803715) # depends on the size of the pruned datastore (various pruning rates)
 
 gpu_ids=(0)
 

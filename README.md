@@ -1,6 +1,6 @@
 ## Abstract
 
-Source codes of ACL 2022-Efficient Cluster-Based k-Nearest-Neighbor Machine Translation.
+Source codes of [ACL 2022-Efficient Cluster-Based k-Nearest-Neighbor Machine Translation](https://arxiv.org/abs/2204.06175).
 
 The implement of our proposed PCKMT is build upon the research of:
 
@@ -8,6 +8,8 @@ The implement of our proposed PCKMT is build upon the research of:
 - Fairseq and Faiss developed by Facebook Research
 
 ## Requirement
+
+For our case, the CUDA version is 10.1. We didn't check other versions yet.
 
 - python >= 3.6
 - faiss-gpu == 1.6.5
@@ -19,6 +21,12 @@ With these requirements, it is suggested to use the command to install this edit
 ```shell
 pip install --editable ./
 ```
+
+## Checkpoints
+
+Our trained checkpoints, datastores and logs are provided: [link](https://pan.baidu.com/s/1RbX6rMjFTuF2J98ewNNVaw)
+(Password: ckmt)
+
 
 ## Implement
 
@@ -67,4 +75,3 @@ python prune_datastore.py
 ```shell
 . test_adaptive_knn_mt_knn_align.sh
 ```
-
