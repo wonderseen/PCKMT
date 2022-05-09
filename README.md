@@ -24,7 +24,7 @@ pip install --editable ./
 
 ## Checkpoints
 
-Our trained checkpoints, datastores and logs are provided: [link](https://pan.baidu.com/s/1RbX6rMjFTuF2J98ewNNVaw)
+Our trained checkpoints, datastores and logs are provided: [link](https://pan.baidu.com/s/1CalRc6qcGlKQ86cprqqkEQ)
 (Password: ckmt)
 
 
