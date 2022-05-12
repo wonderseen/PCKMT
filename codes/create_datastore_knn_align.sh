@@ -18,7 +18,7 @@ DATASTORE_PATH=save_datastore/${OUTDOMAIN}/knn_transfered${postfix}
 mkdir -p $DATASTORE_PATH
 
 # model
-MODEL_PATH=model_record_path/knn_transfered${postfix}_${COMPACT_DIM}/checkpoint_best.pt
+MODEL_PATH=model_record_path/${OUTDOMAIN}/knn_transfered${postfix}_${COMPACT_DIM}/checkpoint_best.pt
 
 
 # log
