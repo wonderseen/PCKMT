@@ -32,8 +32,8 @@ Our trained checkpoints, datastores and logs are provided: [baidu](https://pan.b
 
 Please follow the steps to reproduce experiments:
 
-1. Follow the codebase of (Xin Zheng et. al. 2021) and download the checkpoint of base De-En NMT model released by Facebook WMT 2019.
-2. Similarly, download the corpora and test sets as illustrated by (Xin Zheng et. al. 2021) . 
+1. Follow the codebase of (Xin Zheng et. al. 2021) and download the [checkpoint of base De-En NMT model](https://github.com/pytorch/fairseq/blob/main/examples/wmt19/README.md) released by Facebook WMT 2019.
+2. Similarly, download the [corpora and test sets](https://drive.google.com/file/d/18TXCWzoKuxWKHAaCRgddd6Ub64klrVhV/view) as illustrated by [Xin Zheng et. al. 2021](https://github.com/zhengxxn/adaptive-knn-mt).
 3. Create the original datastore of adaptive kNN-MT.
 
 ```shell
