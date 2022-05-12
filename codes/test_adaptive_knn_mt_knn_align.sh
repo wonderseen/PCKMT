@@ -6,24 +6,34 @@ loss=1.82
 GPU=0
 BATCH_SIZE=64
 
+
+# datastore
 declare -A DSTORE_SIZES_dict
 DSTORE_SIZES_dict=([law]="19061383" [subtitles]="153604142" [it]="3602863" [medical]="6903142" [koran]="524375")
 DSTORE_SIZE=${DSTORE_SIZES_dict[$DOMAIN]}
+DATASTORE_PATH=save_datastore/${DOMAIN}/knn_transfered$postfix
 
+
+# Our codes support multi-gpu faiss, but if your single-/multi- gpu memories in total are less than 20GB,
+# please set USE_GPU=False for datastores (>20M) to build the cpu-mode faiss instance to avoid OOM.
 USE_GPU_dict=([it]="True" [medical]="True" [koran]="True" [law]="True" [merge]="True" [subtitles]="True")
 USE_GPU=${USE_GPU_dict[$DOMAIN]}
 
 
-MODEL_PATH_SUFFIX=model_record_path/...
+# model
+MODEL_PATH_SUFFIX=model_record_path/${DOMAIN}/train-hid32-maxk$k${postfix}
 MODEL_PATH=${MODEL_PATH_SUFFIX}/checkpoint.best_loss_${loss}.pt
 
-DATASTORE_PATH=save_datastore/...
-OUTPUT_PATH=${MODEL_PATH_SUFFIX}/results 
-PROJECT_PATH=.
+
+# corpus
 DATA_PATH=data-bin/${DOMAIN}
 
+
+# translation output
+OUTPUT_PATH=${MODEL_PATH_SUFFIX}/results
 mkdir -p "$OUTPUT_PATH" 
 
+PROJECT_PATH=.
 CUDA_VISIBLE_DEVICES=$GPU python $PROJECT_PATH/experimental_knn_align.py $DATA_PATH \
     --gen-subset test \
     --path "$MODEL_PATH" --arch transformer_knn_de_en_transfered_by_distance \

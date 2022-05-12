@@ -1,5 +1,7 @@
 MODEL_PATH=pretrain_model/wmt19.de-en.ffn8192.pt
 
+COMPACT_DIM=64
+
 gpu_ids=(0 0 0 1 1)
 DSTORE_SIZES=(19070000 6903320 524400 153604142 3613350)
 DOMAINS=(law medical koran subtitles it)
@@ -22,28 +24,35 @@ declare -A MAX_EPOCHS_dict
 MAX_EPOCHS_dict=([koran]="30" [it]="70" [medical]="120" [law]="200" [subtitles]="200" )
 
 
-
 for idx in ${!gpu_ids[*]}
 do
   DOMAIN=${DOMAINS[$idx]}
-
-  COMPACT_DIM=64
-  postfix=_nce_${COMPACT_DIM}
-  NOHUP_FILE=nohup-${DOMAIN}/knn_align${postfix}.txt
-  rm $NOHUP_FILE
-  
   MAX_EPOCH=${MAX_EPOCHS_dict[$DOMAIN]}
-  DSTORE_SIZE=${DSTORE_SIZES[$idx]}
-  MODEL_RECORD_PATH=model_record_path/${DOMAIN}/knn_transfered${postfix}
-  TRAINING_RECORD_PATH=model_record_tensorboard_path/${DOMAIN}/knn_transfered${postfix}
-  DATA_PATH=data-bin/${DOMAIN}
-  DATASTORE_PATH=save_datastore/${DOMAIN}
+  postfix=_nce_${COMPACT_DIM}
 
+  # model storage
+  MODEL_RECORD_PATH=model_record_path/${DOMAIN}/knn_transfered${postfix}
+
+  # log
+  TRAINING_RECORD_PATH=model_record_tensorboard_path/${DOMAIN}/knn_transfered${postfix}
+  NOHUP_FILE=nohup-${DOMAIN}/knn_align${postfix}.txt
+
+  # corpus
+  DATA_PATH=data-bin/${DOMAIN}
+
+  # datastore
+  DATASTORE_PATH=save_datastore/${DOMAIN}
+  DSTORE_SIZE=${DSTORE_SIZES[$idx]}
+
+
+  rm $NOHUP_FILE
   rm -rf "$MODEL_RECORD_PATH"
   rm -rf "$TRAINING_RECORD_PATH"
   mkdir -p "$MODEL_RECORD_PATH"
   mkdir -p "$TRAINING_RECORD_PATH"
 
+
+  # start
   PROJECT_PATH=.
   CUDA_VISIBLE_DEVICES=${gpu_ids[$idx]} nohup python \
   $PROJECT_PATH/fairseq_cli/knn_align.py \

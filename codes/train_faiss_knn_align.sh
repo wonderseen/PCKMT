@@ -17,18 +17,26 @@ PROJECT_PATH=.
 
 for idx in ${!gpu_ids[*]}
 do
+  # model
   MODEL_PATH=model_record_path/${DOMAINS[$idx]}/knn_transfered${postfix}${compact_dim}/checkpoint_best.pt
-  DATASTORE_PATH=${BASE_DATASTORE_PATH}/${DOMAINS[$idx]}/knn_transfered${postfix}${augment_postfix}
+
+  # corpus
   DATA_PATH=data-bin/${DOMAINS[$idx]}
+
+  # datastore
+  DATASTORE_PATH=${BASE_DATASTORE_PATH}/${DOMAINS[$idx]}/knn_transfered${postfix}${augment_postfix}
   MODEL_RECORD_PATH=model_record_path/${DOMAINS[$idx]}/train-hid32-maxk${max_k_grid[$idx]}${postfix}${augment_postfix}
-  TRAINING_RECORD_PATH=model_record_tensorboard_path/${DOMAINS[$idx]}/train-hid32-maxk${max_k_grid[$idx]}${postfix}${augment_postfix}
   rm -rf "$MODEL_RECORD_PATH"
-  rm -rf "$TRAINING_RECORD_PATH"
   mkdir -p "$MODEL_RECORD_PATH"
+
+  # log
+  TRAINING_RECORD_PATH=model_record_tensorboard_path/${DOMAINS[$idx]}/train-hid32-maxk${max_k_grid[$idx]}${postfix}${augment_postfix}
+  rm -rf "$TRAINING_RECORD_PATH"
   mkdir -p "$TRAINING_RECORD_PATH"
   mkdir -p "nohup-${DOMAINS[$idx]}"
   NOHUP_FILE=nohup-${DOMAINS[$idx]}/nohup-maxk${max_k_grid[$idx]}${postfix}${augment_postfix}.txt
 
+  # start
   CUDA_VISIBLE_DEVICES=${gpu_ids[$idx]} python \
   $PROJECT_PATH/fairseq_cli/train.py \
     $DATA_PATH \
