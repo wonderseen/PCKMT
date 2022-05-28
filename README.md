@@ -40,7 +40,7 @@ Please follow the steps to reproduce experiments:
 . create_datastore.sh
 ```
 
-4.  (Optional) Modify the script **prune_datastore.py** to fit your datastore (e.g., datadir, datastore size, etc. in the main() function) and then prune the datastore and then run
+4.  (Optional) Modify the script **prune_datastore.py** to fit your datastore (e.g., datadir, datastore size, etc. in the main() function) and then prune the datastore:
 
 ```shell
 python prune_datastore.py
