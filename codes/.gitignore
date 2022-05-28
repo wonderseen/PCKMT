@@ -1,0 +1,6 @@
+save_datastore
+data-bin
+nohup*
+model_path*
+*/__pycache__
+*.pyc

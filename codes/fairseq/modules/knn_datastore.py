@@ -7,6 +7,7 @@ from torch_scatter import scatter
 import time
 import math
 import faiss.contrib.torch_utils
+import os
 
 
 class KNN_Dstore(object):
@@ -159,28 +160,39 @@ class KNN_Dstore(object):
 
         start = time.time()
 
-        # index = faiss.read_index(args.dstore_filename + '/knn_index_pca', faiss.IO_FLAG_ONDISK_SAME_DIR)
-        index = faiss.read_index(args.dstore_filename + '/knn_index', faiss.IO_FLAG_ONDISK_SAME_DIR)
-        if self.use_gpu_to_search:
-            print('put index from cpu to gpu')
-            if torch.cuda.device_count() == 1: # the original implementation only used 1 GPU
-                res = faiss.StandardGpuResources()
-                self.res = res
-                co = faiss.GpuClonerOptions()
-                co.useFloat16 = True
-                index = faiss.index_cpu_to_gpu(res, 0, index, co)
-            else: # multi-gpu version
-                co = faiss.GpuMultipleClonerOptions()
-                co.useFloat16 = True
-                co.usePrecomputed = False
-                co.shard = True
-                index = faiss.index_cpu_to_all_gpus(index, co, ngpu=torch.cuda.device_count())
+        '''
+        XXX:
+        The adatpve-knn-mt built faiss index ``save_datastore/${DOMAIN}/knn_index`` is deprecated for
+        training Compact Network, so that the adatpve-knn-mt index could be ignored for knn_align.sh.
+        NOTE:
+        The PCKMT built faiss index (after build_faiss_index_knn_align.sh) is instead located at 
+        ``save_datastore/${DOMAIN}/${KNN_TRANSFERED}/knn_index``
+        '''
+        knn_index_file = args.dstore_filename + '/knn_index'
+        if os.path.exists(knn_index_file):
+            index = faiss.read_index(knn_index_file, faiss.IO_FLAG_ONDISK_SAME_DIR)
+            if self.use_gpu_to_search:
+                print('put index from cpu to gpu')
+                if torch.cuda.device_count() == 1: # the original implementation only used 1 GPU
+                    res = faiss.StandardGpuResources()
+                    self.res = res
+                    co = faiss.GpuClonerOptions()
+                    co.useFloat16 = True
+                    index = faiss.index_cpu_to_gpu(res, 0, index, co)
+                else: # multi-gpu version
+                    co = faiss.GpuMultipleClonerOptions()
+                    co.useFloat16 = True
+                    co.usePrecomputed = False
+                    co.shard = True
+                    index = faiss.index_cpu_to_all_gpus(index, co, ngpu=torch.cuda.device_count())
 
-        print('Reading datastore took {} s'.format(time.time() - start))
-        print('the datastore is {}, size is {}, and dim is {} '.
-              format(args.dstore_filename, self.dstore_size, self.dimension))
+            print('Reading datastore took {} s'.format(time.time() - start))
+            print('the datastore is {}, size is {}, and dim is {} '.
+                format(args.dstore_filename, self.dstore_size, self.dimension))
 
-        index.nprobe = args.probe
+            index.nprobe = args.probe
+        else:
+            index = None
 
         if args.dstore_fp16:
             print('Keys are fp16 and vals are int32')

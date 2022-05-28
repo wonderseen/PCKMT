@@ -3,8 +3,8 @@ MODEL_PATH=pretrain_model/wmt19.de-en.ffn8192.pt
 COMPACT_DIM=64
 
 gpu_ids=(0 0 0 1 1)
-DSTORE_SIZES=(19070000 6903320 524400 153604142 3613350)
-DOMAINS=(law medical koran subtitles it)
+DSTORE_SIZES=(3613350 524400 6903320 19070000 153604142)
+DOMAINS=(it koran medical law subtitles)
 
 
 # It takes external time to duplicate the parser-dependent dataloader of fairseq
@@ -17,9 +17,9 @@ DOMAINS=(law medical koran subtitles it)
 # knn_align.sh becuase the triple sampling dataloader is parser-independent.
 # The only role of batch_size_grid for this script is that the training epoch is
 # (roughly) computed as: bath_size * step // bilingual_corpus_size
-batch_size_grid=(2 2 2 2)
-valid_batch_size_grid=(64 64 64 64)
-update_freq_grid=(1 1 1 1)
+batch_size_grid=(2 2 2 2 2)
+valid_batch_size_grid=(64 64 64 64 64)
+update_freq_grid=(1 1 1 1 1)
 declare -A MAX_EPOCHS_dict
 MAX_EPOCHS_dict=([koran]="30" [it]="70" [medical]="120" [law]="200" [subtitles]="200" )
 
