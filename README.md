@@ -37,7 +37,7 @@ Please follow the steps to reproduce experiments:
 3. Create the original datastore of adaptive kNN-MT.
 
 ```shell
-. create_datastore.sh
+cd codes && . create_datastore.sh
 ```
 
 4.  (Optional) Modify the script **prune_datastore.py** to fit your datastore (e.g., datadir, datastore size, etc. in the main() function) and then prune the datastore:
