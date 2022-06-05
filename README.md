@@ -32,7 +32,7 @@ Our trained checkpoints, datastores and logs are provided: [baidu](https://pan.b
 
 Please follow the steps to reproduce experiments:
 
-1. Follow the codebase of (Xin Zheng et. al. 2021) and download the [checkpoint of base De-En NMT model](https://github.com/pytorch/fairseq/blob/main/examples/wmt19/README.md) released by Facebook WMT 2019.
+1. Follow the codebase of (Xin Zheng et. al. 2021) and download the checkpoint of [base De-En NMT model](https://github.com/pytorch/fairseq/blob/main/examples/wmt19/README.md) released by Facebook WMT 2019.
 2. Similarly, download the [corpora and test sets](https://drive.google.com/file/d/18TXCWzoKuxWKHAaCRgddd6Ub64klrVhV/view) as illustrated by [Xin Zheng et. al. 2021](https://github.com/zhengxxn/adaptive-knn-mt).
 3. Create the original datastore of adaptive kNN-MT.
 
@@ -40,7 +40,7 @@ Please follow the steps to reproduce experiments:
 cd codes && . create_datastore.sh
 ```
 
-4.  (Optional) Modify the script **prune_datastore.py** to fit your datastore (e.g., datadir, datastore size, etc. in the main() function) and then prune the datastore:
+4.  [Option] Modify the script **prune_datastore.py** to fit your datastore (e.g., datadir, datastore size, etc. in the main() function) and then prune the datastore:
 
 ```shell
 python prune_datastore.py
@@ -76,7 +76,18 @@ python prune_datastore.py
 . test_adaptive_knn_mt_knn_align.sh
 ```
 
+
+
+## Updates
+
+- 2022-05-12 see [[issue #1 pckmt]](https://github.com/wonderseen/PCKMT/issues/1) which describes the minimal realization the via checkpoints downloading.
+
+- 2022-05-22 see [[Issue #2 pckmt]](https://github.com/wonderseen/PCKMT/issues/2) that summarizes empirical issues with respect to large-scale datastores.
+
+  
+
 ## Reference
+
 If you use the source codes included here in your work, please cite the following paper:  
 ```bibtex
 @misc{https://doi.org/10.48550/arxiv.2204.06175,
