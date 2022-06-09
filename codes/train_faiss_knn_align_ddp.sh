@@ -1,17 +1,16 @@
-gpu_ids=(0 0 1 2 3)
-max_k_grid=(4 4 4 4 4)
-batch_size_grid=(8 8 8 8 8) # depending on your gpu memory
-update_freq_grid=(1 1 1 1 1)
-valid_batch_size_grid=(32 32 32 32 32)
+gpu_ids=(1,2,3)
+max_k_grid=(4)
+batch_size_grid=(8) # depending on your gpu memory
+update_freq_grid=(1)
+valid_batch_size_grid=(32)
 
-DOMAINS=(koran it law medical subtitles)
-DSTORE_SIZES=(524375 3602863 19061383 6903142 153604142)
+DOMAINS=(it)
+DSTORE_SIZES=(3602863)
 
 BASE_DATASTORE_PATH=save_datastore
 postfix=_nce
 compact_dim=_64
 augment_postfix=
-
 
 PROJECT_PATH=.  
 
@@ -38,7 +37,7 @@ do
 
   # start
   CUDA_VISIBLE_DEVICES=${gpu_ids[$idx]} python \
-  $PROJECT_PATH/fairseq_cli/train.py \
+  $PROJECT_PATH/fairseq_cli/train_ddp.py \
     $DATA_PATH \
     --use-gpu-to-search \
     --log-interval 100 --log-format simple \
@@ -71,6 +70,10 @@ do
     --label-count-as-feature --not-train-knn-compact-projection \
     --dstore-fp16 \
     --knn-temperature-value 10 \
-    > ${NOHUP_FILE} 2>&1 &
-    echo ${NOHUP_FILE}
+    --faiss-batch-mode 'batch_large_faiss_large'
+    # faiss-batch-mode options:
+    #  'batch_large_faiss_large'
+    #  'batch_large_faiss_small'
+    #  'batch_small_faiss_small'
+    #  'batch_small_faiss_large'
 done

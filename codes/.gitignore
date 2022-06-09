@@ -4,3 +4,6 @@ nohup*
 model_path*
 */__pycache__
 *.pyc
+pretrain_model
+model_record_path
+build

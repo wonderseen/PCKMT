@@ -30,13 +30,30 @@ def get_preprocessing_parser(default_task="translation"):
     return parser
 
 
-def get_training_parser(default_task="translation"):
+def get_training_parser(default_task="translation", world_size=None):
     parser = get_parser("Trainer", default_task)
     add_dataset_args(parser, train=True)
-    add_distributed_training_args(parser)
+    add_distributed_training_args(parser, default_world_size=world_size)
     add_model_args(parser)
     add_optimization_args(parser)
     add_checkpoint_args(parser)
+    return parser
+
+
+def add_faiss_batch_balance_parser(parser):
+    # group = parser.add_argument_group("faiss-batch-balance")
+    parser.add_argument("--faiss-batch-mode", type=str, default="",
+        choices=['batch_large_faiss_large',
+                'batch_large_faiss_small',
+                'batch_small_faiss_large',
+                'batch_small_faiss_small',
+                ''])
+    return parser
+
+
+def get_faiss_batch_balance_training_parser(world_size=None):
+    parser = get_training_parser(world_size=world_size)
+    add_faiss_batch_balance_parser(parser)
     return parser
 
 
