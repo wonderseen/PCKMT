@@ -84,6 +84,8 @@ python prune_datastore.py
 
 - 2022-05-22 see [[Issue #2 pckmt]](https://github.com/wonderseen/PCKMT/issues/2) that summarizes empirical issues with respect to large-scale datastores.
 
+- 2022-06-09 support Meta-k network DDP training. Four options provided to fit different datastore/batch sizes.
+
   
 
 ## Reference
