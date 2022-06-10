@@ -66,14 +66,38 @@ python prune_datastore.py
 
 8. Train the CKMT model
 
+Run the training on 1 GPU
+
 ```shell
 . train_faiss_knn_align.sh
 ```
 
+Or run the training on multiply GPUs, when--
+
+- The training process causes OOM
+- The size of your datastore is too large, e.g. >100M tokens
+- The batch size is too large, e.g. >16 on P100
+
+```shell
+. train_faiss_knn_align.sh
+```
+
+The only difference of the DDP script is an external parameter:
+
+```shell
+options of 'faiss-batch-mode':
+    'batch_large_faiss_large'
+    'batch_large_faiss_small'
+    'batch_small_faiss_small'
+    'batch_small_faiss_large'
+```
+
+
+
 9. Evaluation
 
 ```shell
-. test_adaptive_knn_mt_knn_align.sh
+. train_faiss_knn_align_ddp.sh
 ```
 
 
@@ -84,7 +108,7 @@ python prune_datastore.py
 
 - 2022-05-22 see [[Issue #2 pckmt]](https://github.com/wonderseen/PCKMT/issues/2) that summarizes empirical issues with respect to large-scale datastores.
 
-- 2022-06-09 support Meta-k network DDP training. Four options provided to fit different datastore/batch sizes.
+- 2022-06-09 see support Meta-k network DDP training. Four options provided to fit different datastore/batch sizes.
 
   
 
