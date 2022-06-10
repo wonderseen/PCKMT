@@ -79,7 +79,7 @@ Or run the training on multiply GPUs, when--
 - The batch size is too large, e.g. >16 on P100
 
 ```shell
-. train_faiss_knn_align.sh
+. train_faiss_knn_align_ddp.sh
 ```
 
 The only difference of the DDP script is an external parameter:
@@ -97,7 +97,7 @@ options of 'faiss-batch-mode':
 9. Evaluation
 
 ```shell
-. train_faiss_knn_align_ddp.sh
+. test_adaptive_knn_mt_knn_align.sh
 ```
 
 
