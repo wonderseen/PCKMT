@@ -1113,7 +1113,7 @@ def main(paradict: Dict):
 
 
 def cli_main():
-    prune_style = 'prune_similar_entropy'
+    prune_style = 'prune_similar_ppl'
     unsupervise_prune_sample_rate = 0.9
 
     dstore_fp16 = True
